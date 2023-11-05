@@ -15,10 +15,39 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 
+    <!-- sccdn scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/g/async@1.5.0,jquery@1.11.0,es6-promise@1.0.0,bootstrap@2.3.2,codemirror@3.22.0(codemirror.min.js+addon/lint/lint.js+addon/edit/matchbrackets.js+addon/edit/closebrackets.js+addon/display/placeholder.js+addon/hint/show-hint.js+mode/ntriples/ntriples.js+mode/javascript/javascript.js)"></script>-->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js" integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.js" integrity="sha512-8RnEqURPUc5aqFEN04aQEiPlSAdE0jlFS/9iGgUyNtwFnSKCXhmB6ZTNl7LnDtDWKabJIASzXrzD0K+LYexU9g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsonld@8.3.1/dist/jsonld.min.js"></script>
+    <!--<script src="https://unpkg.com/jsonld@x.y.z/dist/jsonld.js"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jsonld/x.y.z/jsonld.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.6.7/d3-tip.min.js"></script>
+    <script src="./json-ld/playground/jsonld-vis.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsonld-signatures@2.3.1/dist/jsonld-signatures.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/node-forge@0.8.1/dist/forge.min.js"></script>
+
+    <!-- local scripts -->
+    <script src="./json-ld/playground/bitcore-message.js"></script>
+    <script src="./json-ld/playground/jsonlint.js"></script>
+    <script src="./json-ld/playground/tv4.min.js"></script>
+    <script src="./json-ld/playground/json-schema-lint.js"></script>
+    <script src="./json-ld/playground/jsonld-hint.js"></script>
+    <script src="./json-ld/playground/playground.js"></script>
+    <script src="./json-ld/playground/playground-examples.js"></script>
+
     <!-- Style Sheets -->
-    <link rel="stylesheet" type="text/css" href="./json-ld/static/css/bootstrap/bootstrap.css">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
     <!-- CodeMirror -->
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/g/bootstrap@2.3.1(css/bootstrap-responsive.min.css),codemirror@3.22.0(codemirror.css+addon/lint/lint.css+addon/hint/show-hint.css+theme/neat.css)">
+    <!-- <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/g/bootstrap@2.3.1(css/bootstrap-responsive.min.css),codemirror@3.22.0(codemirror.css+addon/lint/lint.css+addon/hint/show-hint.css+theme/neat.css)"> -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/codemirror.min.css" integrity="sha512-uf06llspW44/LZpHzHT6qBOIVODjWtv4MxCricRxkzvopAlSWnTf6hpZTFxuuZcuNE9CBQhqE0Seu1CoRk84nQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/hint/show-hint.min.css" integrity="sha512-OmcLQEy8iGiD7PSm85s06dnR7G7C9C0VqahIPAj/KHk5RpOCmnC6R2ob1oK4/uwYhWa9BF1GC6tzxsC8TIx7Jg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/hint/show-hint.min.js" integrity="sha512-yhmeAerubMLaGAsyS7sE8Oqub6GeTkBDQpkXo2JKHgg7JOCudQvcbDQc5rPxdl7MqcDusTJzSy+ODlyzAwETfQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/theme/neat.min.css" integrity="sha512-yySSMHK1wb+xdn5GRRSXY6KQMMMyBS4jGB5bKms2Gu2U9mGQnk4zUavraMI/Cc0h19kYNPlQYkqK6pVXM4O56Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/lint/lint.min.css" integrity="sha512-jP1+o6s94WQS9boYeDP3Azh8ihI5BxGgBZNjkABhx05MqH5WuDzfzSnoPxGxVzWi/gxxVHZHvWkdRM6SMy5B0Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/6.65.7/addon/lint/lint.min.js" integrity="sha512-fzIkwQa9H8rjoDzpZ9sMOYhgaYwh9nKALWbE1m+7wpiry9PN5OyNcZ9LySotjEysolveRyv2C9pVJ+DbEuKtmQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/fontawesome/3.2.1/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="./json-ld/playground/playground.css">
     <link rel="stylesheet" type="text/css" href="./json-ld/playground/jsonld-vis.css">
@@ -58,7 +87,7 @@
       </div>
     </div>
 
-    <div class="loading hero">
+    <div class="loading jumbotron">
       <h1><i class="icon-spinner icon-spin icon-large"></i> Loading the Playground...</h1>
     </div>
     <div class="loaded hide">
@@ -94,8 +123,10 @@
             <span>Activity</span>
           </button>
         </div>
-
-        <div class="pull-right">
+        <button type="button" class="btn btn-secondary" data-bs-container="body" data-bs-toggle="popover" data-bs-placement="bottom" title="Test" data-bs-content="Bottom popover">
+          Popover on bottom
+        </button>
+        <div class="float-right">
           <a class="btn hide" id="permalink">
             <i class="icon icon-link"></i>
             <span>Permalink</span>
@@ -104,6 +135,7 @@
             <i class="icon icon-github"></i>
             <span>Gist</span>
           </a>
+
           <button class="btn popover-info" title="Keyboard shortcuts">
             <i class="icon icon-keyboard"></i> Shortcuts
           </button>
@@ -131,21 +163,21 @@
 
         <div class="container" id="markup-container">
           <div class="row">
-            <div id="markup-div" class="span12">
+            <div id="markup-div" class="col-md-12">
               <ul id="input-tabs" class="nav nav-tabs">
-                <li class="active">
-                  <a id="tab-input" href="#pane-input" data-toggle="tab" name="tab-input">
+                <li class="nav-item">
+                  <a id="tab-input" class="nav-link active" href="#pane-input" data-toggle="tab" name="tab-input">
                     <i class="icon-pencil"></i>
                     <span><strong>JSON-LD Input</strong></span>
                   </a>
                 </li>
                 <li>
-                  <a id="tab-input-options" href="#pane-input-options" data-toggle="tab" name="tab-input-options">
+                  <a id="tab-input-options" class="nav-link active" href="#pane-input-options" data-toggle="tab" name="tab-input-options">
                     <i class="icon-wrench"></i>
                     <span>Options</span>
                   </a>
                 </li>
-                <li class="pull-right">
+                <li class="nav-item float-right">
                   <div class="editor-options">
                     <div class="input-prepend editor-option" title="Use remote document" data-editor="markup">
                       <button class="btn" type="button" data-toggle="button">
@@ -154,7 +186,7 @@
                           <i class="icon-file"></i>
                         </span>
                       </button>
-                      <input class="span2" type="text" placeholder="Document URL"/>
+                      <input class="col-md-2" type="text" placeholder="Document URL"/>
                     </div>
                   </div>
                 </li>
@@ -266,15 +298,15 @@
               </div> <!-- /.tab-content -->
             </div>
 
-            <div id="context-div" class="span6">
+            <div id="context-div" class="col-md-6">
               <ul id="context-tabs" class="nav nav-tabs">
-                <li class="active">
-                  <a id="tab-context" href="#pane-context" data-toggle="tab" name="tab-context">
+                <li class="nav-item">
+                  <a id="tab-context" class="nav-link active" href="#pane-context" data-toggle="tab" name="tab-context">
                     <i class="icon-pencil"></i>
                     <span><strong>New JSON-LD Context</strong></span>
                   </a>
                 </li>
-                <li class="pull-right">
+                <li class="nav-item float-right">
                   <div class="editor-options">
                     <div class="input-prepend editor-option" title="Use remote context" data-editor="context">
                       <button class="btn" type="button" data-toggle="button">
@@ -283,7 +315,7 @@
                           <i class="icon-bullseye"></i>
                         </span>
                       </button>
-                      <input class="span2" type="text" placeholder="Context URL"/>
+                      <input class="col-md-2" type="text" placeholder="Context URL"/>
                     </div>
                   </div>
                 </li>
@@ -301,15 +333,15 @@
               </div> <!-- /.tab-content -->
             </div>
 
-            <div id="frame-div" class="span6">
+            <div id="frame-div" class="col-md-6">
               <ul id="frame-tabs" class="nav nav-tabs">
-                <li class="active">
-                  <a id="tab-frame" href="#pane-frame" data-toggle="tab" name="tab-frame">
+                <li class="nav-item">
+                  <a id="tab-frame" class="nav-link active" href="#pane-frame" data-toggle="tab" name="tab-frame">
                     <i class="icon-pencil"></i>
                     <span><strong>JSON-LD Frame</strong></span>
                   </a>
                 </li>
-                <li class="pull-right">
+                <li class="nav-item float-right">
                   <div class="editor-options">
                     <div class="input-prepend editor-option" title="Use remote frame" data-editor="frame">
                       <button class="btn" type="button" data-toggle="button">
@@ -318,7 +350,7 @@
                           <i class="icon-crop"></i>
                         </span>
                       </button>
-                      <input class="span2" type="text" placeholder="Frame URL" />
+                      <input class="col-md-2" type="text" placeholder="Frame URL" />
                     </div>
                   </div>
                 </li>
@@ -332,15 +364,15 @@
               </div> <!-- /.tab-content -->
             </div>
 
-            <div id="privatekey-rsa-div" class="span6">
+            <div id="privatekey-rsa-div" class="col-md-6">
               <ul id="privatekey-rsa-tabs" class="nav nav-tabs">
-                <li class="active">
-                  <a id="tab-privatekey-rsa" href="#pane-privatekey-rsa" data-toggle="tab" name="tab-privatekey-rsa">
+                <li class="nav-item">
+                  <a id="tab-privatekey-rsa" class="nav-link active" href="#pane-privatekey-rsa" data-toggle="tab" name="tab-privatekey-rsa">
                     <i class="icon-pencil"></i>
                     <span><strong>PEM-Encoded Private Key</strong></span>
                   </a>
                 </li>
-                <li class="pull-right">
+                <li class="nav-item float-right">
                   <div class="editor-options">
                     <div class="input-prepend editor-option" title="Use remote private key" data-editor="privatekey-rsa">
                       <button class="btn" type="button" data-toggle="button">
@@ -349,7 +381,7 @@
                           <i class="icon-eye-close"></i>
                         </span>
                       </button>
-                      <input class="span2" type="text" placeholder="Private Key URL" />
+                      <input class="col-md-2" type="text" placeholder="Private Key URL" />
                     </div>
                   </div>
                 </li>
@@ -379,10 +411,10 @@ yT2IMAWbY76Bmi8TeQJAfdLJGwiDNIhTVYHxvDz79ANzgRAd1kPKPddJZ/w7Gfhm
               </div> <!-- /.tab-content -->
             </div>
 
-            <div id="privatekey-koblitz-div" class="span6">
+            <div id="privatekey-koblitz-div" class="col-md-6">
               <ul id="privatekey-koblitz-tabs" class="nav nav-tabs">
-                <li class="active">
-                  <a id="tab-privatekey-koblitz" href="#pane-privatekey-koblitz" data-toggle="tab" name="tab-privatekey-koblitz">
+                <li class="nav-item">
+                  <a id="tab-privatekey-koblitz" class="nav-link active" href="#pane-privatekey-koblitz" data-toggle="tab" name="tab-privatekey-koblitz">
                     <i class="icon-pencil"></i>
                     <span><strong>Bitcoin (ECDSA) Koblitz Keys</strong></span>
                   </a>
@@ -446,70 +478,70 @@ yT2IMAWbY76Bmi8TeQJAfdLJGwiDNIhTVYHxvDz79ANzgRAd1kPKPddJZ/w7Gfhm
 
         <div id="output-container">
           <ul id="output-tabs" class="nav nav-tabs">
-            <li class="active">
-              <a id="tab-expanded" href="#pane-expanded" data-toggle="tab" name="tab-expanded">
+            <li class="nav-item">
+              <a id="tab-expanded" class="nav-link active" href="#pane-expanded" data-toggle="tab" name="tab-expanded">
                 <i class="icon-resize-full"></i>
                 <span>Expanded</span>
               </a>
             </li>
-            <li>
-              <a id="tab-compacted" href="#pane-compacted" data-toggle="tab" name="tab-compacted">
+            <li class="nav-item">
+              <a id="tab-compacted" class="nav-link" href="#pane-compacted" data-toggle="tab" name="tab-compacted">
                 <i class="icon-resize-small"></i>
                 <span>Compacted</span>
               </a>
             </li>
-            <li>
-              <a id="tab-flattened" href="#pane-flattened" data-toggle="tab" name="tab-flattened">
+            <li class="nav-item">
+              <a id="tab-flattened" class="nav-link" href="#pane-flattened" data-toggle="tab" name="tab-flattened">
                 <i class="icon-reorder"></i>
                 <span>Flattened</span>
               </a>
             </li>
-            <li>
-              <a id="tab-framed" href="#pane-framed" data-toggle="tab" name="tab-framed">
+            <li class="nav-item">
+              <a id="tab-framed" class="nav-link" href="#pane-framed" data-toggle="tab" name="tab-framed">
                 <i class="icon-crop"></i>
                 <span>Framed</span>
               </a>
             </li>
-            <li>
-              <a id="tab-nquads" href="#pane-nquads" data-toggle="tab" name="tab-nquads">
+            <li class="nav-item">
+              <a id="tab-nquads" class="nav-link" href="#pane-nquads" data-toggle="tab" name="tab-nquads">
                 <i class="rdf-icon-rdf"></i>
                 <span>N-Quads</span>
               </a>
             </li>
-            <li>
-              <a id="tab-canonized" href="#pane-canonized" data-toggle="tab" name="tab-canonized">
+            <li class="nav-item">
+              <a id="tab-canonized" class="nav-link" href="#pane-canonized" data-toggle="tab" name="tab-canonized">
                 <i class="icon-archive"></i>
                 <span>Canonized</span>
               </a>
             </li>
-            <li>
-              <a id="tab-table" href="#pane-table" data-toggle="tab" name="tab-table">
+            <li class="nav-item">
+              <a id="tab-table" class="nav-link" href="#pane-table" data-toggle="tab" name="tab-table">
                 <i class="icon-th"></i>
                 <span>Table</span>
               </a>
             </li>
-            <li>
-              <a id="tab-visualized" href="#pane-visualized" data-toggle="tab" name="tab-visualized">
+            <li class="nav-item">
+              <a id="tab-visualized" class="nav-link" href="#pane-visualized" data-toggle="tab" name="tab-visualized">
                 <i class="icon-eye-open"></i>
                 <span>Visualized</span>
               </a>
             </li>
             <!--
-            <li>
-              <a id="tab-signed-rsa" href="#pane-signed-rsa" data-toggle="tab" name="tab-signed-rsa">
+            <li class="nav-item">
+              <a id="tab-signed-rsa" class="nav-link" href="#pane-signed-rsa" data-toggle="tab" name="tab-signed-rsa">
                 <i class="icon-pencil"></i>
                 <span>Signed with RSA</span>
               </a>
             </li>
-            <li>
-              <a id="tab-signed-koblitz" href="#pane-signed-koblitz" data-toggle="tab" name="tab-signed-koblitz">
+            <li class="nav-item">
+              <a id="tab-signed-koblitz" class="nav-link" href="#pane-signed-koblitz" data-toggle="tab" name="tab-signed-koblitz">
                 <i class="icon-pencil"></i>
                 <span>Signed with Bitcoin</span>
               </a>
             </li>
             -->
-            <li>
-              <a id="tab-signatures" href="#pane-signatures" data-toggle="tab" name="tab-signatures">
+            <li class="nav-item">
+              <a id="tab-signatures" class="nav-link" href="#pane-signatures" data-toggle="tab" name="tab-signatures">
                 <i class="icon-pencil"></i>
                 <span>Signatures</span>
               </a>
@@ -586,26 +618,6 @@ yT2IMAWbY76Bmi8TeQJAfdLJGwiDNIhTVYHxvDz79ANzgRAd1kPKPddJZ/w7Gfhm
       </div>
     </div>
 
-    <!-- sccdn scripts -->
-    <script src="https://cdn.jsdelivr.net/g/async@1.5.0,jquery@1.11.0,es6-promise@1.0.0,bootstrap@2.3.2,codemirror@3.22.0(codemirror.min.js+addon/lint/lint.js+addon/edit/matchbrackets.js+addon/edit/closebrackets.js+addon/display/placeholder.js+addon/hint/show-hint.js+mode/ntriples/ntriples.js+mode/javascript/javascript.js)"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jsonld@8.3.1/dist/jsonld.min.js"></script>
-    <!--<script src="https://unpkg.com/jsonld@x.y.z/dist/jsonld.js"></script>-->
-    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jsonld/x.y.z/jsonld.js"></script>-->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.6.7/d3-tip.min.js"></script>
-    <script src="./json-ld/playground/jsonld-vis.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/jsonld-signatures@2.3.1/dist/jsonld-signatures.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/node-forge@0.8.1/dist/forge.min.js"></script>
-
-    <!-- local scripts -->
-    <script src="./json-ld/playground/bitcore-message.js"></script>
-    <script src="./json-ld/playground/jsonlint.js"></script>
-    <script src="./json-ld/playground/tv4.min.js"></script>
-    <script src="./json-ld/playground/json-schema-lint.js"></script>
-    <script src="./json-ld/playground/jsonld-hint.js"></script>
-    <script src="./json-ld/playground/playground.js"></script>
-    <script src="./json-ld/playground/playground-examples.js"></script>
-
     <script>
       (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
       (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
@@ -626,6 +638,8 @@ yT2IMAWbY76Bmi8TeQJAfdLJGwiDNIhTVYHxvDz79ANzgRAd1kPKPddJZ/w7Gfhm
           $(this).removeClass('active');
         });
       });
+      const popoverTriggerList = document.querySelectorAll('[data-bs-toggle="popover"]')
+      const popoverList = [...popoverTriggerList].map(popoverTriggerEl => new bootstrap.Popover(popoverTriggerEl))
     </script>
 
   </body>
