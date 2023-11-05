@@ -1,0 +1,4 @@
+[submodule "json-ld"]
+	path = json-ld
+	url = https://github.com/json-ld/json-ld.org
+	branch = main
