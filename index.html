@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html
+  prefix="
+    xhv: http://www.w3.org/1999/xhtml/vocab#
+    xsd: http://www.w3.org/2001/XMLSchema#
+    rdfs: http://www.w3.org/2000/01/rdf-schema#
+    dc: http://purl.org/dc/terms/
+    vcard: http://www.w3.org/2006/vcard/ns#
+    v: http://rdf.data-vocabulary.org/#"
+  lang="en" >
+  <head>
+    <title>JSON-LD Playground</title>
+
+    <!-- Meta Tags -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
+
+    <!-- Style Sheets -->
+    <link rel="stylesheet" type="text/css" href="../static/css/bootstrap/bootstrap.css">
+
+    <!-- CodeMirror -->
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/g/bootstrap@2.3.1(css/bootstrap-responsive.min.css),codemirror@3.22.0(codemirror.css+addon/lint/lint.css+addon/hint/show-hint.css+theme/neat.css)">
+    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/fontawesome/3.2.1/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="./playground.css">
+    <link rel="stylesheet" type="text/css" href="./jsonld-vis.css">
+    <link rel="stylesheet" type="text/css" href="../static/css/rdf-font/rdf-font.css">
+
+    <link rel="shortcut icon" href="../favicon.ico" />
+  </head>
+
+  <body id="page-playground" onload="playground.init();">
+    <div class="navbar navbar-static-top">
+      <div class="navbar-inner">
+        <div class="row-fluid">
+          <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </a>
+          <a class="brand" href="../"><img src="../images/json-ld-data-24.png" alt="JSON-LD logo"> JSON-LD</a>
+          <div class="nav-collapse">
+          <ul class="nav">
+            <li class="active">
+              <a href="../playground/"><span class="icon-beer"></span> Playground</a>
+            </li>
+            <li>
+              <a href="../learn.html"><span class="icon-book"></span> Documentation</a>
+            </li>
+            <li><a href="../#developers"><span class="icon-beaker"></span> Developers</a></li>
+            <li class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                <span class="icon-folder-open"></span> Specifications <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                  <li class="nav-header"><strong>W3C Recommendations</strong></li>
+                  <li><a href="https://www.w3.org/TR/json-ld/">Syntax</a></li>
+                  <li><a href="https://www.w3.org/TR/json-ld-api/">Processing Algorithms and API</a></li>
+                  <li><a href="https://www.w3.org/TR/json-ld-framing/">Framing</a></li>
+                  <li class="divider"></li>
+                  <li class="nav-header"><strong>Latest Drafts</strong></li>
+                  <li><a href="https://w3c.github.io/json-ld-syntax/">Syntax</a></li>
+                  <li><a href="https://w3c.github.io/json-ld-api/">Processing Algorithms and API</a></li>
+                  <li><a href="https://w3c.github.io/json-ld-framing/">Framing</a></li>
+                  <li><a href="https://w3c.github.io/json-ld-bp/">Best Practices</a></li>
+                  <li><a href="https://w3c.github.io/json-ld-streaming/">Streaming</a></li>
+                  <li><a href="https://json-ld.github.io/json-ld-star/">JSON-LD-star</a></li>
+                  <li><a href="https://w3c.github.io/json-ld-cbor/">CBOR</a></li>
+                  <li><a href="https://github.com/w3c/json-ld-rc/">Recommended Context</a></li>
+                  <li><a href="https://json-ld.github.io/yaml-ld/">YAML-LD</a></li>
+                  <li><a href="/spec/">1.0 drafts (historic)</a></li>
+              </ul>
+            </li>
+            <li><a href="../images/"><span class="icon-picture"></span> Branding</a></li>
+            </ul>
+          </div>
+          <!--/.nav-collapse -->
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+      <h2>JSON-LD Playground</h2>
+      <p>
+        Play around with JSON-LD markup by typing out some JSON below and
+        seeing what gets generated from it at the bottom of the page. Pick any
+        of the examples below to get started.
+      </p>
+      <div class="alert alert-info">
+        <strong>NOTES</strong>:
+        <ul>
+          <li>
+            The playground uses <a href="https://github.com/digitalbazaar/jsonld.js">jsonld.js</a>
+            which <a href="https://github.com/digitalbazaar/jsonld.js#conformance">conforms</a>
+            to JSON-LD 1.1
+            <a href="https://www.w3.org/TR/json-ld11/">syntax</a>
+            (<a href="https://w3c.github.io/json-ld-syntax/errata/">errata</a>),
+            <a href="https://www.w3.org/TR/json-ld11-api/">API</a>
+            (<a href="https://w3c.github.io/json-ld-api/errata/">errata</a>), and
+            <a href="https://www.w3.org/TR/json-ld11-framing/">framing</a>
+            (<a href="https://w3c.github.io/json-ld-framing/errata/">errata</a>).
+          </li>
+          <li>
+            Other related playgrounds:
+            <a href="./1.0/">Classic JSON-LD 1.0 Playground</a> |
+            <a href="http://rdf.greggkellogg.net/distiller">RDF Distiller</a> |
+            <a href="https://vcplayground.org/">Verifiable Credentials Playground</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="loading hero">
+      <h1><i class="icon-spinner icon-spin icon-large"></i> Loading the Playground...</h1>
+    </div>
+    <div class="loaded hide">
+      <div class="container">
+        <div class="btn-group" data-toggle="buttons-radio">
+          <button class="btn disabled btn-primary">Examples:</button>
+          <button id="btn-person" class="btn button">
+            <i class="icon icon-user"></i>
+            <span>Person</span>
+          </button>
+          <button id="btn-event" class="btn button">
+            <i class="icon icon-calendar"></i>
+            <span>Event</span>
+          </button>
+          <button id="btn-place" class="btn button">
+            <i class="icon icon-map-marker"></i>
+            <span>Place</span>
+          </button>
+          <button id="btn-product" class="btn button">
+            <i class="icon icon-barcode"></i>
+            <span>Product</span>
+          </button>
+          <button id="btn-recipe" class="btn button">
+            <i class="icon icon-food"></i>
+            <span>Recipe</span>
+          </button>
+          <button id="btn-library" class="btn button">
+            <i class="icon icon-book"></i>
+            <span>Library</span>
+          </button>
+          <button id="btn-activity" class="btn button">
+            <i class="icon icon-comment"></i>
+            <span>Activity</span>
+          </button>
+        </div>
+
+        <div class="pull-right">
+          <a class="btn hide" id="permalink">
+            <i class="icon icon-link"></i>
+            <span>Permalink</span>
+          </a>
+          <a class="btn" id="gist">
+            <i class="icon icon-github"></i>
+            <span>Gist</span>
+          </a>
+          <button class="btn popover-info" title="Keyboard shortcuts">
+            <i class="icon icon-keyboard"></i> Shortcuts
+          </button>
+          <div class="popover-info-content hide">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Key</th>
+                  <th>Autocomplete</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><label class="label">@</label></td>
+                  <td>all of the <b>@</b> keywords</td>
+                </tr>
+                <tr>
+                  <td><label class="label">Ctrl+Space</label></td>
+                  <td>available keys in <b>@context</b></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="container" id="markup-container">
+          <div class="row">
+            <div id="markup-div" class="span12">
+              <ul id="input-tabs" class="nav nav-tabs">
+                <li class="active">
+                  <a id="tab-input" href="#pane-input" data-toggle="tab" name="tab-input">
+                    <i class="icon-pencil"></i>
+                    <span><strong>JSON-LD Input</strong></span>
+                  </a>
+                </li>
+                <li>
+                  <a id="tab-input-options" href="#pane-input-options" data-toggle="tab" name="tab-input-options">
+                    <i class="icon-wrench"></i>
+                    <span>Options</span>
+                  </a>
+                </li>
+                <li class="pull-right">
+                  <div class="editor-options">
+                    <div class="input-prepend editor-option" title="Use remote document" data-editor="markup">
+                      <button class="btn" type="button" data-toggle="button">
+                        <span class="icon-stack">
+                          <i class="icon-cloud icon-stack-base icon-muted"></i>
+                          <i class="icon-file"></i>
+                        </span>
+                      </button>
+                      <input class="span2" type="text" placeholder="Document URL"/>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+
+              <div class="tab-content">
+                <div id="pane-input" class="tab-pane active">
+                  <textarea id="markup" class="compressed process span6 codemirror-input"
+                  placeholder="Enter your JSON-LD markup here..." rows="10"></textarea>
+                </div>
+                <div id="pane-input-options" class="tab-pane">
+                  <form class="form-horizontal">
+                    <div class="control-group">
+                      <label class="control-label" for="options-api-processingMode">Processing Mode</label>
+
+                      <div class="controls" id="options-api-processingMode">
+                        <label class="radio inline">
+                          <input type="radio" id="options-api-processingMode-default" name="processingMode" value="" checked/>
+                          Default
+                        </label>
+
+                        <label class="radio inline">
+                          <input type="radio" id="options-api-processingMode-1-0" name="processingMode" value="json-ld-1.0" />
+                          JSON-LD 1.0
+                        </label>
+
+                        <label class="radio inline">
+                          <input type="radio" id="options-api-processingMode-1-1" name="processingMode" value="json-ld-1.1" />
+                          JSON-LD 1.1
+                        </label>
+                      </div>
+                    </div>
+
+                    <div class="control-group">
+                      <label class="control-label" for="options-api-base">Base</label>
+                      <div class="controls" id="options-api-base">
+                        <label class="radio inline">
+                          <input type="radio" id="options-api-base-default" name="base" value="" checked/>
+                          Default
+                        </label>
+
+                        <label class="radio inline">
+                          <input type="radio" id="options-api-base-custom" name="base" value="custom" />
+                          Custom URL
+                        </label>
+                      </div>
+                      <div class="controls" id="options-api-base2">
+                        <input type="text" id="options-api-base-url" placeholder="URL">
+                      </div>
+                    </div>
+
+                    <div class="control-group">
+                      <label class="control-label" for="options-api-compactArrays">Compact Arrays</label>
+                      <div class="controls">
+                        <input type="checkbox" id="options-api-compactArrays"></input>
+                      </div>
+                    </div>
+
+                    <div class="control-group">
+                      <label class="control-label" for="options-api-compactToRelative">Compact To Relative</label>
+                      <div class="controls">
+                        <input type="checkbox" id="options-api-compactToRelative"></input>
+                      </div>
+                    </div>
+
+                    <div class="control-group">
+                      <label class="control-label" for="options-api-rdfDirection">RDF Direction Mode</label>
+                      <div class="controls" id="options-api-rdfDirection">
+                        <label class="radio inline">
+                          <input type="radio" id="options-api-rdfDirection-default" name="rdfDirection" value="" checked/>
+                          Default (null)
+                        </label>
+
+                        <label class="radio inline">
+                          <input type="radio" id="options-api-rdfDirection-i18n-datatype" name="rdfDirection" value="i18n-datatype" />
+                          "i18n-datatype"
+                        </label>
+
+                        <!--
+                        <label class="radio inline">
+                          <input type="radio" id="options-api-rdfDirection-compound-literal" name="rdfDirection" value="compound-literal" />
+                          "compound-literal"
+                        </label>
+                        -->
+                      </div>
+                    </div>
+
+                    <div class="control-group">
+                      <label class="control-label" for="options-api-safe">Safe</label>
+                      <div class="controls" id="options-api-safe">
+                        <label class="radio inline">
+                          <input type="radio" id="options-api-safe-default" name="safe" value="" checked/>
+                          Default
+                        </label>
+
+                        <label class="radio inline">
+                          <input type="radio" id="options-api-safe-false" name="safe" value="false" />
+                          False
+                        </label>
+
+                        <label class="radio inline">
+                          <input type="radio" id="options-api-safe-true" name="safe" value="true" />
+                          True
+                        </label>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div> <!-- /.tab-content -->
+            </div>
+
+            <div id="context-div" class="span6">
+              <ul id="context-tabs" class="nav nav-tabs">
+                <li class="active">
+                  <a id="tab-context" href="#pane-context" data-toggle="tab" name="tab-context">
+                    <i class="icon-pencil"></i>
+                    <span><strong>New JSON-LD Context</strong></span>
+                  </a>
+                </li>
+                <li class="pull-right">
+                  <div class="editor-options">
+                    <div class="input-prepend editor-option" title="Use remote context" data-editor="context">
+                      <button class="btn" type="button" data-toggle="button">
+                        <span class="icon-stack">
+                          <i class="icon-cloud icon-stack-base icon-muted"></i>
+                          <i class="icon-bullseye"></i>
+                        </span>
+                      </button>
+                      <input class="span2" type="text" placeholder="Context URL"/>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+
+              <div class="tab-content">
+                <div id="pane-context" class="tab-pane active">
+                  <button class="btn" data-toggle="button" id="copy-context" title='Copy context from "JSON-LD Input"'>
+                    <i class="icon-circle-arrow-right"></i>
+                  </button>
+
+                  <textarea id="context" class="compressed process span6 codemirror-input"
+                  placeholder="Enter the new JSON-LD context to compact to here..." rows="10">{}</textarea>
+                </div>
+              </div> <!-- /.tab-content -->
+            </div>
+
+            <div id="frame-div" class="span6">
+              <ul id="frame-tabs" class="nav nav-tabs">
+                <li class="active">
+                  <a id="tab-frame" href="#pane-frame" data-toggle="tab" name="tab-frame">
+                    <i class="icon-pencil"></i>
+                    <span><strong>JSON-LD Frame</strong></span>
+                  </a>
+                </li>
+                <li class="pull-right">
+                  <div class="editor-options">
+                    <div class="input-prepend editor-option" title="Use remote frame" data-editor="frame">
+                      <button class="btn" type="button" data-toggle="button">
+                        <span class="icon-stack">
+                          <i class="icon-cloud icon-stack-base icon-muted"></i>
+                          <i class="icon-crop"></i>
+                        </span>
+                      </button>
+                      <input class="span2" type="text" placeholder="Frame URL" />
+                    </div>
+                  </div>
+                </li>
+              </ul>
+
+              <div class="tab-content">
+                <div id="pane-frame" class="tab-pane active">
+                  <textarea id="frame" class="compressed process span6 codemirror-input"
+                  placeholder="Enter your JSON-LD frame here..." rows="10">{}</textarea>
+                </div>
+              </div> <!-- /.tab-content -->
+            </div>
+
+            <div id="privatekey-rsa-div" class="span6">
+              <ul id="privatekey-rsa-tabs" class="nav nav-tabs">
+                <li class="active">
+                  <a id="tab-privatekey-rsa" href="#pane-privatekey-rsa" data-toggle="tab" name="tab-privatekey-rsa">
+                    <i class="icon-pencil"></i>
+                    <span><strong>PEM-Encoded Private Key</strong></span>
+                  </a>
+                </li>
+                <li class="pull-right">
+                  <div class="editor-options">
+                    <div class="input-prepend editor-option" title="Use remote private key" data-editor="privatekey-rsa">
+                      <button class="btn" type="button" data-toggle="button">
+                        <span class="icon-stack">
+                          <i class="icon-cloud icon-stack-base icon-muted"></i>
+                          <i class="icon-eye-close"></i>
+                        </span>
+                      </button>
+                      <input class="span2" type="text" placeholder="Private Key URL" />
+                    </div>
+                  </div>
+                </li>
+              </ul>
+
+              <div class="tab-content">
+                <div id="pane-privatekey-rsa" class="tab-pane active">
+                  <textarea id="privatekey-rsa" class="compressed process span6 codemirror-input"
+                  placeholder="Enter your PEM-encoded private key here..." rows="10">
+-----BEGIN RSA PRIVATE KEY-----
+MIICWwIBAAKBgQC4R1AmYYyE47FMZgo708NhFU+t+VWn133PYGt/WYmD5BnKj679
+YiUmyrC3hX6oZfo4eVpOkycxZvGgXCLQGuDp45XfZkdsjqs3o62En4YjlHWxgeGm
+kiRqGfZ3sJ3u5WZ2xwapdZY3/2T/oOV5ri8SktTvmVGCyhwFuJC/NbJMEwIDAQAB
+AoGAZXNdPMQXiFGSGm1S1P0QYzJIW48ZCP4p1TFP/RxeCK5bRJk1zWlq6qBMCb0E
+rdD2oICupvN8cEYsYAxZXhhuGWZ60vggbqTTa+4LXB+SGCbKMX711ZoQHdY7rnaF
+b/Udf4wTLD1yAslx1TrHkV56OfuJcEdWC7JWqyNXQoxedwECQQDZvcEmBT/Sol/S
+AT5ZSsgXm6xCrEl4K26Vyw3M5UShRSlgk12gfqqSpdeP5Z7jdV/t5+vD89OJVfaa
+Tw4h9BibAkEA2Khe03oYQzqP1V4YyV3QeC4yl5fCBr8HRyOMC4qHHKQqBp2VDUyu
+RBJhTqqf1ErzUBkXseawNxtyuPmPrMSl6QJAQOgfu4W1EMT2a1OTkmqIWwE8yGMz
+Q28u99gftQRjAO/s9az4K++WSUDGkU6RnpxOjEymKzNzy2ykpjsKq3RoIQJAA+XL
+huxsYVE9Yy5FLeI1LORP3rBJOkvXeq0mCNMeKSK+6s2M7+dQP0NBYuPo6i3LAMbi
+yT2IMAWbY76Bmi8TeQJAfdLJGwiDNIhTVYHxvDz79ANzgRAd1kPKPddJZ/w7Gfhm
+8Mezti8HCizDxPb+H8HlJMSkfoHx1veWkdLaPWRFrA==
+-----END RSA PRIVATE KEY-----
+                  </textarea>
+                </div>
+              </div> <!-- /.tab-content -->
+            </div>
+
+            <div id="privatekey-koblitz-div" class="span6">
+              <ul id="privatekey-koblitz-tabs" class="nav nav-tabs">
+                <li class="active">
+                  <a id="tab-privatekey-koblitz" href="#pane-privatekey-koblitz" data-toggle="tab" name="tab-privatekey-koblitz">
+                    <i class="icon-pencil"></i>
+                    <span><strong>Bitcoin (ECDSA) Koblitz Keys</strong></span>
+                  </a>
+                </li>
+              </ul>
+
+              <div class="tab-content">
+                <div id="pane-privatekey-koblitz" class="tab-pane active">
+                  <form>
+                    <fieldset>
+                      <h4><i class="icon-eye-close"></i> Private Key for Signing</h4>
+                      <textarea id="privatekey-koblitz" class="compressed process span6 codemirror-input"
+                      placeholder="Enter your Bitcoin (Koblitz) private key here..." rows="3">L4mEi7eEdTNNFQEWaa7JhUKAbtHdVvByGAqvpJKC53mfiqunjBjw</textarea>
+
+                      <h4><i class="icon-eye-open"></i> Public Key for Verification</h4>
+                      <textarea id="publickey-koblitz" class="compressed process span6 codemirror-input"
+                      placeholder="Enter your Bitcoin (Koblitz) public key here..." rows="3">1LGpGhGK8whX23ZNdxrgtjKrek9rP4xWER</textarea>
+                    </fieldset>
+                  </form>
+                  <div class="koblitz-verification"></div>
+                  <!--
+                  <h4>Private Key for Signing</h4>
+                  <textarea id="privatekey-koblitz" class="compressed process span6 codemirror-input"
+                  placeholder="Enter your Bitcoin (Koblitz) private key here..." rows="3">L4mEi7eEdTNNFQEWaa7JhUKAbtHdVvByGAqvpJKC53mfiqunjBjw</textarea>
+
+                  <h4>Public Key for Verification</h4>
+                  <textarea id="publickey-koblitz" class="compressed process span6 codemirror-input"
+                  placeholder="Enter your Bitcoin (Koblitz) public key here..." rows="3">1LGpGhGK8whX23ZNdxrgtjKrek9rP4xWER</textarea>
+                  <div class="koblitz-verification"></div>
+                  -->
+                </div>
+              </div> <!-- /.tab-content -->
+            </div>
+          </div>
+        </div>
+
+        <div id="markup-errors" class="hide alert alert-error"></div>
+        <div id="param-errors" class="hide alert alert-error"></div>
+        <div id="validation-errors" class="hide alert alert-error"></div>
+        <div id="validation-message" class="hide alert alert-success"></div>
+        <div id="using-context-map" class="hide alert alert-note">
+          <p>NOTE: A remote context that is not known to be fully working yet was detected in your input.
+            If you wish, you can use an alternative context created by the JSON-LD community to
+            process your document nevertheless.</p>
+          <label class="checkbox">
+            <input type="checkbox" id="use-context-map" value="1"> Use development context
+          </label>
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <td>Original</td>
+                <td>Development</td>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- dynamic rows -->
+            </tbody>
+          </table>
+        </div>
+        <div id="processing-errors" class="hide alert alert-error"></div>
+
+        <div id="output-container">
+          <ul id="output-tabs" class="nav nav-tabs">
+            <li class="active">
+              <a id="tab-expanded" href="#pane-expanded" data-toggle="tab" name="tab-expanded">
+                <i class="icon-resize-full"></i>
+                <span>Expanded</span>
+              </a>
+            </li>
+            <li>
+              <a id="tab-compacted" href="#pane-compacted" data-toggle="tab" name="tab-compacted">
+                <i class="icon-resize-small"></i>
+                <span>Compacted</span>
+              </a>
+            </li>
+            <li>
+              <a id="tab-flattened" href="#pane-flattened" data-toggle="tab" name="tab-flattened">
+                <i class="icon-reorder"></i>
+                <span>Flattened</span>
+              </a>
+            </li>
+            <li>
+              <a id="tab-framed" href="#pane-framed" data-toggle="tab" name="tab-framed">
+                <i class="icon-crop"></i>
+                <span>Framed</span>
+              </a>
+            </li>
+            <li>
+              <a id="tab-nquads" href="#pane-nquads" data-toggle="tab" name="tab-nquads">
+                <i class="rdf-icon-rdf"></i>
+                <span>N-Quads</span>
+              </a>
+            </li>
+            <li>
+              <a id="tab-canonized" href="#pane-canonized" data-toggle="tab" name="tab-canonized">
+                <i class="icon-archive"></i>
+                <span>Canonized</span>
+              </a>
+            </li>
+            <li>
+              <a id="tab-table" href="#pane-table" data-toggle="tab" name="tab-table">
+                <i class="icon-th"></i>
+                <span>Table</span>
+              </a>
+            </li>
+            <li>
+              <a id="tab-visualized" href="#pane-visualized" data-toggle="tab" name="tab-visualized">
+                <i class="icon-eye-open"></i>
+                <span>Visualized</span>
+              </a>
+            </li>
+            <!--
+            <li>
+              <a id="tab-signed-rsa" href="#pane-signed-rsa" data-toggle="tab" name="tab-signed-rsa">
+                <i class="icon-pencil"></i>
+                <span>Signed with RSA</span>
+              </a>
+            </li>
+            <li>
+              <a id="tab-signed-koblitz" href="#pane-signed-koblitz" data-toggle="tab" name="tab-signed-koblitz">
+                <i class="icon-pencil"></i>
+                <span>Signed with Bitcoin</span>
+              </a>
+            </li>
+            -->
+            <li>
+              <a id="tab-signatures" href="#pane-signatures" data-toggle="tab" name="tab-signatures">
+                <i class="icon-pencil"></i>
+                <span>Signatures</span>
+              </a>
+            </li>
+          </ul>
+
+          <div class="tab-content">
+            <div id="pane-expanded" class="tab-pane active">
+              <textarea id="expanded" class="codemirror-output"></textarea>
+            </div>
+            <div id="pane-compacted" class="tab-pane">
+              <textarea id="compacted" class="codemirror-output"></textarea>
+            </div>
+            <div id="pane-flattened" class="tab-pane">
+              <textarea id="flattened" class="codemirror-output"></textarea>
+            </div>
+            <div id="pane-framed" class="tab-pane">
+              <textarea id="framed" class="codemirror-output"></textarea>
+            </div>
+            <div id="pane-nquads" class="tab-pane">
+              <textarea id="nquads" class="codemirror-output"></textarea>
+            </div>
+            <div id="pane-canonized" class="tab-pane">
+              <textarea id="canonized" class="codemirror-output"></textarea>
+            </div>
+            <div id="pane-table" class="tab-pane">
+              <table id="table" class="table table-condensed">
+                <thead>
+                  <tr>
+                    <th>Subject</th>
+                    <th>Predicate</th>
+                    <th>Object</th>
+                    <th>Language</th>
+                    <th>Datatype</th>
+                    <th>Graph</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <div id="pane-visualized" class="tab-pane">
+              <div id="visualized" style="background: white"></div>
+            </div>
+            <!--
+            <div id="pane-signed-rsa" class="tab-pane">
+              <textarea id="signed-rsa" class="codemirror-output"></textarea>
+            </div>
+            <div id="pane-signed-koblitz" class="tab-pane">
+              <textarea id="signed-koblitz" class="codemirror-output"></textarea>
+            </div>
+            -->
+            <div id="pane-signatures" class="tab-pane">
+              <div class="alert alert-info">
+                <strong>NOTE</strong>:
+                As of 2022-08-25, the demos of RSA and Bitcoin signatures are
+                temporarily unavailable. For a demo involving JSON-LD
+                signatures and other related technology, please see the
+                <a href="https://vcplayground.org/">Verifiable Credentials Playground</a>.
+              </div>
+            </div>
+          </div><!-- /.tab-content -->
+        </div>
+
+        <hr/>
+      </div> <!-- /.container -->
+    </div> <!-- /.loading -->
+
+    <div class="container">
+      <div id="footer">
+        <p id="copyright">
+         Website content released under a <a href="http://creativecommons.org/about/cc0">Creative Commons CC0 Public Domain Dedication</a> except where an alternate is specified.
+         Part of the <a href="http://payswarm.com/">PaySwarm</a> standardization initiative.
+        </p>
+      </div>
+    </div>
+
+    <!-- sccdn scripts -->
+    <script src="https://cdn.jsdelivr.net/g/async@1.5.0,jquery@1.11.0,es6-promise@1.0.0,bootstrap@2.3.2,codemirror@3.22.0(codemirror.min.js+addon/lint/lint.js+addon/edit/matchbrackets.js+addon/edit/closebrackets.js+addon/display/placeholder.js+addon/hint/show-hint.js+mode/ntriples/ntriples.js+mode/javascript/javascript.js)"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsonld@8.3.1/dist/jsonld.min.js"></script>
+    <!--<script src="https://unpkg.com/jsonld@x.y.z/dist/jsonld.js"></script>-->
+    <!--<script src="https://cdnjs.cloudflare.com/ajax/libs/jsonld/x.y.z/jsonld.js"></script>-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.17/d3.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3-tip/0.6.7/d3-tip.min.js"></script>
+    <script src="./jsonld-vis.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jsonld-signatures@2.3.1/dist/jsonld-signatures.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/node-forge@0.8.1/dist/forge.min.js"></script>
+
+    <!-- local scripts -->
+    <!--<script src="./jsonld.js"></script> -->
+    <!--<script src="./forge.min.js"></script>-->
+    <script src="./bitcore-message.js"></script>
+    <!--<script src="./jsonld-signatures.js"></script>-->
+    <script src="./jsonlint.js"></script>
+    <script src="./tv4.min.js"></script>
+    <script src="./json-schema-lint.js"></script>
+    <script src="./jsonld-hint.js"></script>
+    <script src="./playground.js"></script>
+    <script src="./playground-examples.js"></script>
+
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-42886053-1', 'json-ld.org');
+      ga('send', 'pageview');
+    </script>
+
+    <script type="text/javascript">
+      $('#context-div').hide();
+      $('#frame-div').hide();
+      $('#privatekey-rsa-div').hide();
+      $('#privatekey-koblitz-div').hide();
+      $('#markup,#context,#frame').bind('keyup', function() {
+        $('.btn-group > .btn').each(function () {
+          $(this).removeClass('active');
+        });
+      });
+    </script>
+
+  </body>
+</html>
