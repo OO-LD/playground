@@ -587,6 +587,7 @@
 
         setSchema.addEventListener('click', function () {
             try {
+                data.json = null;
                 data.options.schema = JSON.parse(schemaTextarea.value)
             } catch (e) {
                 alert('Invalid Schema: ' + e.message)
