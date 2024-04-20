@@ -4,13 +4,14 @@
 <head>
     <meta charset="utf-8" />
     <title>JSON Editor Interactive Example</title>
+    <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.14.0/src-noconflict/ace.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@json-editor/json-editor@latest/dist/jsoneditor.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/lz-string@1.4.4/libs/lz-string.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.6-rc.1/dist/js/select2.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.6-rc.1/dist/css/select2.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.14.0/src-noconflict/ace.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.14.0/src-noconflict/mode-json.js"></script>
+
     <link rel='stylesheet' id='theme-link'>
     <link rel='stylesheet' id='iconlib-link'>
     <style>
@@ -239,7 +240,8 @@
             maxLines: Infinity,
             minLines: 5,
             showFoldWidgets: true,
-            showPrintMargin: false
+            showPrintMargin: false,
+            fontSize: "12pt"
         }
 
         var jsoneditor = null
@@ -303,7 +305,8 @@
 
         var refreshUI = function () {
             // schema
-            schemaTextarea.value = JSON.stringify(data.options.schema, null, 2)
+            schemaTextarea.setValue(JSON.stringify(data.options.schema, null, 2))
+            schemaTextarea.clearSelection(1)
 
             // theme
             var themeMap = {
@@ -502,7 +505,8 @@
             jsoneditor.on('change', function () {
                 // output
                 data.json = jsoneditor.getValue()
-                outputTextarea.value = JSON.stringify(data.json, null, 2)
+                outputTextarea.setValue(JSON.stringify(data.json, null, 2))
+                outputTextarea.clearSelection(1)
 
                 // validate
                 var validationErrors = jsoneditor.validate()
@@ -516,6 +520,8 @@
                 //copy the data
                 var jsonld_data = JSON.parse(JSON.stringify(data.json));
                 jsonld_data = { ...{ "@context": jsoneditor.options.schema["@context"] }, ...jsonld_data };
+
+
 
                 // simulate input within the json-ld playground iframe input with id="markup"
                 var jsonldPlaygroundIframe = document.getElementById("json-ld-playground-iframe")
@@ -540,7 +546,7 @@
                                     var codeMirrorData2 = JSON.parse(codeMirror.getValue());
                                     
                                     jsoneditor.options.schema["@context"] = codeMirrorData2["@context"]; 
-                                    document.getElementById("schema-textarea").value = JSON.stringify(jsoneditor.options.schema, null, 2);
+                                    document.getElementById("schema-textarea").setValue(JSON.stringify(jsoneditor.options.schema, null, 2));
                                     var codeMirrorData = JSON.parse(codeMirror.getValue());
                                     delete codeMirrorData["@context"];
                                     if (JSON.stringify(codeMirrorData, null, 2) !== JSON.stringify(jsoneditor.getValue(codeMirrorData), null, 2)) {
@@ -598,13 +604,13 @@
         /* -------------------------------------------------------- event listeners */
 
         setValue.addEventListener('click', function () {
-            jsoneditor.setValue(JSON.parse(outputTextarea.value))
+            jsoneditor.setValue(JSON.parse(outputTextarea.getValue()))
         })
 
         setSchema.addEventListener('click', function () {
             try {
                 data.json = null;
-                data.options.schema = JSON.parse(schemaTextarea.value)
+                data.options.schema = JSON.parse(schemaTextarea.getValue())
             } catch (e) {
                 alert('Invalid Schema: ' + e.message)
                 return
