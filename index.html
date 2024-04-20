@@ -9,6 +9,8 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.0.6-rc.1/dist/js/select2.min.js"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/select2@4.0.6-rc.1/dist/css/select2.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.14.0/src-noconflict/mode-yaml.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/ace-builds@1.14.0/src-noconflict/ace.js"></script>
     <link rel='stylesheet' id='theme-link'>
     <link rel='stylesheet' id='iconlib-link'>
     <style>
@@ -232,6 +234,14 @@
             keep_oneof_values: false,
         }
 
+        var aceConfig = {
+            mode: 'ace/mode/yaml',
+            maxLines: Infinity,
+            minLines: 5,
+            showFoldWidgets: true,
+            showPrintMargin: false
+        }
+
         var jsoneditor = null
         var directLink = document.querySelector('#direct-link')
 
@@ -242,8 +252,8 @@
         var libSelect = document.querySelector('#lib-select')
         var jsonEditorForm = document.querySelector('#json-editor-form')
         var objectLayoutSelect = document.querySelector('#object-layout-select')
-        var outputTextarea = document.querySelector('#output-textarea')
-        var schemaTextarea = document.querySelector('#schema-textarea')
+        var outputTextarea = ace.edit('output-textarea', aceConfig)
+        var schemaTextarea = ace.edit('schema-textarea', aceConfig)
         var setSchema = document.querySelector('#setschema')
         var setValue = document.querySelector('#setvalue')
         var showErrorsSelect = document.querySelector('#show-errors-select')
