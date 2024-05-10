@@ -1,0 +1,30 @@
+{
+  "@context": {
+    "playground": "https://oo-ld.github.io/playground/examples/",
+    "schema": "http://schema.org/",
+    "type": "@type",
+    "name": "schema:name"
+  },
+  "$id": "https://oo-ld.github.io/playground/examples/Thing.schema.json",
+  "title": "Thing",
+  "type": "object",
+  "required": [
+    "type",
+    "name"
+  ],
+  "properties": {
+     "type": {
+      "type": "string",
+      "const": "playground:Thing",
+      "options": {
+        "hidden": true
+      }
+    },
+    "name": {
+      "type": "string",
+      "description": "The things name,
+      "minLength": 1,
+      "default": "A Thing"
+    }
+  }
+}
