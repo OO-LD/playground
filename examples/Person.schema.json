@@ -14,7 +14,7 @@
       "$ref": "https://oo-ld.github.io/playground/examples/Thing.schema.json"
     }
   ],
-  "$comment": "A Person is a Thing, to we import the context (per @context) and schema (per allOf.$ref) of Thing",
+  "$comment": "A Person is a Thing, so we import the context (per @context) and schema (per allOf.$ref) of Thing",
   "title": "Person",
   "type": "object",
   "required": [
