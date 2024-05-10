@@ -161,63 +161,73 @@
     <script>
 
         var defaultSchema = {
-            "@context": {
-                "schema": "http://schema.org/",
-                "name": "schema:name",
-                "date": "schema:birthDate",
-                "gender": "schema:gender",
-                "location": "schema:address",
-                "city": "schema:addressLocality",
-                "state": "schema:addressRegion",
-            },
-            "title": "Person",
-            "type": "object",
-            "required": [
-                "name",
-            ],
-            "properties": {
-                "name": {
-                    "type": "string",
-                    "description": "First and Last name",
-                    "minLength": 4,
-                    "default": "Jeremy Dorn"
-                },
-                "age": {
-                    "type": "integer",
-                    "default": 25,
-                    "minimum": 18,
-                    "maximum": 99
-                },
-                "gender": {
-                    "type": "string",
-                    "enum": [
-                        "male",
-                        "female",
-                        "other"
-                    ]
-                },
-                "date": {
-                    "type": "string",
-                    "format": "date",
-                    "options": {
-                        "flatpickr": {}
-                    }
-                },
-                "location": {
-                    "type": "object",
-                    "title": "Location",
-                    "properties": {
-                        "city": {
-                            "type": "string",
-                            "default": "San Francisco"
-                        },
-                        "state": {
-                            "type": "string",
-                            "default": "CA"
-                        }
-                    }
-                }
+          "@context": [
+            "https://oo-ld.github.io/playground/examples/Thing.schema.json",
+            {
+              "date": "schema:birthDate",
+              "gender": "schema:gender",
+              "location": "schema:address",
+              "city": "schema:addressLocality",
+              "state": "schema:addressRegion"
             }
+          ],
+          "allOf": [
+            {
+              "$ref": "https://oo-ld.github.io/playground/examples/Thing.schema.json"
+            }
+          ],
+          "$comment": "A Person is a Thing, to we import the context (per @context) and schema (per allOf.$ref) of Thing",
+          "title": "Person",
+          "type": "object",
+          "required": [
+            "name"
+          ],
+          "properties": {
+            "type": {
+              "$comment": "Already defined in playground:Thing -> we override just the default",
+              "default": "playground:Person"
+            },
+            "name": {
+              "description": "First and Last name",
+              "minLength": 4,
+              "default": "Jeremy Dorn"
+            },
+            "age": {
+              "type": "integer",
+              "default": 25,
+              "minimum": 18,
+              "maximum": 99
+            },
+            "gender": {
+              "type": "string",
+              "enum": [
+                "male",
+                "female",
+                "other"
+              ]
+            },
+            "date": {
+              "type": "string",
+              "format": "date",
+              "options": {
+                "flatpickr": {}
+              }
+            },
+            "location": {
+              "type": "object",
+              "title": "Location",
+              "properties": {
+                "city": {
+                  "type": "string",
+                  "default": "San Francisco"
+                },
+                "state": {
+                  "type": "string",
+                  "default": "CA"
+                }
+              }
+            }
+          }
         }
         // parse url -> merge options -> refreshUI() -> initJsoneditor() -> direct link
 
