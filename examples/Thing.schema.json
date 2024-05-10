@@ -22,7 +22,7 @@
     },
     "name": {
       "type": "string",
-      "description": "The things name,
+      "description": "The things name",
       "minLength": 1,
       "default": "A Thing"
     }
