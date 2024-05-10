@@ -15,7 +15,7 @@
   "properties": {
      "type": {
       "type": "string",
-      "const": "playground:Thing",
+      "default": "playground:Thing",
       "options": {
         "hidden": true
       }
