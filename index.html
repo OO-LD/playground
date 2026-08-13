@@ -161,74 +161,79 @@
     </div>
     <script>
 
-        var defaultSchema = {
-          "@context": [
-            "https://oo-ld.github.io/playground/examples/Thing.schema.json",
-            {
-              "date": "schema:birthDate",
-              "gender": "schema:gender",
-              "location": "schema:address",
-              "city": "schema:addressLocality",
-              "state": "schema:addressRegion"
-            }
-          ],
-          "allOf": [
-            {
-              "$ref": "https://oo-ld.github.io/playground/examples/Thing.schema.json"
-            }
-          ],
-          "$comment": "A Person is a Thing, so we import the context (per @context) and schema (per allOf.$ref) of Thing",
-          "title": "Person",
+        // The official OO-LD examples are published by the oold-schema deployment.
+        // Loading the default example from there keeps this playground in sync with
+        // the canonical source instead of vendoring a copy that drifts.
+        var OOLD_SCHEMA_BASE = 'https://oo-ld.org/latest/schemas/'
+        var OOLD_DEFAULT_SCHEMA_URL = OOLD_SCHEMA_BASE + 'Person.schema.json'
+
+        // Only used when the deployment is unreachable, so the editor still renders
+        // something valid offline. Mirrors examples/Minimal.schema.json.
+        var fallbackSchema = {
+          "$schema": "https://oo-ld.org/latest/meta/oold-meta-schema.json",
+          "$id": OOLD_SCHEMA_BASE + "Minimal.schema.json",
+          "@context": {
+            "schema": "http://schema.org/",
+            "name": "schema:name"
+          },
+          "title": "Minimal",
           "type": "object",
-          "required": [
-            "name"
-          ],
           "properties": {
-            "type": {
-              "$comment": "Already defined in playground:Thing -> we override just the default",
-              "default": "playground:Person"
-            },
-            "name": {
-              "description": "First and Last name",
-              "minLength": 4,
-              "default": "Jeremy Dorn"
-            },
-            "age": {
-              "type": "integer",
-              "default": 25,
-              "minimum": 18,
-              "maximum": 99
-            },
-            "gender": {
-              "type": "string",
-              "enum": [
-                "male",
-                "female",
-                "other"
-              ]
-            },
-            "date": {
-              "type": "string",
-              "format": "date",
-              "options": {
-                "flatpickr": {}
-              }
-            },
-            "location": {
-              "type": "object",
-              "title": "Location",
-              "properties": {
-                "city": {
-                  "type": "string",
-                  "default": "San Francisco"
-                },
-                "state": {
-                  "type": "string",
-                  "default": "CA"
-                }
-              }
-            }
+            "name": { "type": "string", "description": "Name of the thing" }
           }
+        }
+
+        var isRelativeRef = function (value) {
+            return typeof value === 'string' && !/^[a-z][a-z0-9+.-]*:/i.test(value) && value.charAt(0) !== '#' && value.slice(0, 2) !== '//'
+        }
+
+        // A remote context is either a string or an array whose string entries are
+        // context URLs; the object entries are term definitions and must stay as they
+        // are (their values are CURIEs like schema:name, not references).
+        var absolutizeContext = function (context, base) {
+            if (isRelativeRef(context)) return new URL(context, base).href
+            if (Array.isArray(context)) {
+                return context.map(function (entry) {
+                    return isRelativeRef(entry) ? new URL(entry, base).href : entry
+                })
+            }
+            return context
+        }
+
+        // The published schemas use relative ids and references (e.g. "Thing.schema.json")
+        // which would otherwise resolve against this page instead of the deployment.
+        var absolutizeRefs = function (node, base) {
+            if (Array.isArray(node)) {
+                node.forEach(function (item) { absolutizeRefs(item, base) })
+                return node
+            }
+            if (node === null || typeof node !== 'object') return node
+            Object.keys(node).forEach(function (key) {
+                var value = node[key]
+                if (key === '@context') {
+                    node[key] = absolutizeContext(value, base)
+                } else if ((key === '$id' || key === '$ref' || key === 'x-oold-range') && isRelativeRef(value)) {
+                    node[key] = new URL(value, base).href
+                } else {
+                    absolutizeRefs(value, base)
+                }
+            })
+            return node
+        }
+
+        var loadDefaultSchema = function () {
+            return fetch(OOLD_DEFAULT_SCHEMA_URL)
+                .then(function (response) {
+                    if (!response.ok) throw new Error('HTTP ' + response.status)
+                    return response.json()
+                })
+                .then(function (schema) {
+                    return absolutizeRefs(schema, OOLD_SCHEMA_BASE)
+                })
+                .catch(function (reason) {
+                    console.warn('Could not load ' + OOLD_DEFAULT_SCHEMA_URL + ', falling back to the offline example: ' + reason)
+                    return fallbackSchema
+                })
         }
         // parse url -> merge options -> refreshUI() -> initJsoneditor() -> direct link
 
@@ -239,7 +244,7 @@
         var defaultOptions = {
             iconlib: 'fontawesome5',
             object_layout: 'normal',
-            schema: defaultSchema,
+            schema: fallbackSchema,
             show_errors: 'interaction',
             theme: 'bootstrap4',
             ajax: true,
@@ -673,7 +678,13 @@
             refreshUI()
         })
 
-        parseUrl()
+        // Resolve the canonical default before the editor initializes. A ?data=
+        // permalink carries its own schema and still wins, because mergeOptions()
+        // assigns data.options over defaultOptions.
+        loadDefaultSchema().then(function (schema) {
+            defaultOptions.schema = schema
+            parseUrl()
+        })
 
     </script>
 </body>
