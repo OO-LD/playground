@@ -221,17 +221,20 @@
             return node
         }
 
-        var loadDefaultSchema = function () {
-            return fetch(OOLD_DEFAULT_SCHEMA_URL)
+        var loadSchemaFrom = function (url) {
+            // Resolve the schema's own relative references against the directory it
+            // was fetched from, so an example loaded from anywhere still resolves.
+            var base = new URL('.', url).href
+            return fetch(url)
                 .then(function (response) {
                     if (!response.ok) throw new Error('HTTP ' + response.status)
                     return response.json()
                 })
                 .then(function (schema) {
-                    return absolutizeRefs(schema, OOLD_SCHEMA_BASE)
+                    return absolutizeRefs(schema, base)
                 })
                 .catch(function (reason) {
-                    console.warn('Could not load ' + OOLD_DEFAULT_SCHEMA_URL + ', falling back to the offline example: ' + reason)
+                    console.warn('Could not load ' + url + ', falling back to the offline example: ' + reason)
                     return fallbackSchema
                 })
         }
@@ -678,10 +681,15 @@
             refreshUI()
         })
 
-        // Resolve the canonical default before the editor initializes. A ?data=
-        // permalink carries its own schema and still wins, because mergeOptions()
-        // assigns data.options over defaultOptions.
-        loadDefaultSchema().then(function (schema) {
+        // A ?schema=<url> param loads a specific schema (e.g. an official example)
+        // as the default; a bare name resolves against the canonical schema base.
+        // A full ?data= permalink still wins, because mergeOptions() assigns
+        // data.options over defaultOptions.
+        var requestedSchema = new URLSearchParams(window.location.search).get('schema')
+        var defaultSchemaUrl = requestedSchema
+            ? new URL(requestedSchema, OOLD_SCHEMA_BASE).href
+            : OOLD_DEFAULT_SCHEMA_URL
+        loadSchemaFrom(defaultSchemaUrl).then(function (schema) {
             defaultOptions.schema = schema
             parseUrl()
         })
